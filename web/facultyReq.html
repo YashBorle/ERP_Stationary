@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/facReq.css">
+            
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+	<h4 class="jumbotron">FACULTY REQUEST PAGE</h4>
+	<form class="requisition-page">
+		<h2>Stationary Required Fill Up Form</h2>
+		<label for="faculty name" >
+			Faculty Name: 
+		</label>
+		<input type="text" name="tname" placeholder="Enter Faculty Name"><br><br><br>
+
+		<label for="branch name">
+			Branch Name:	
+		</label>
+		<input type="text" name="bname" placeholder="Enter Branch Name"><br><br><br>
+
+		<label for="item name">
+			Item Name:
+		</label>
+		<select>
+				<option disabled="disabled" selected="selected">Choose Option</option>
+				<option>-Marker</option>
+				<option>Duster</option>			
+				<option>Chalk</option>
+				<option>Projector</option>
+				<option>Laptop</option>
+			</select>&nbsp;&nbsp;&nbsp;&nbsp;
+
+			<label for="qty req">
+				Qty Required:
+			</label>
+			<input type="number" name="qtyre" placeholder="Quantity Required"><br><br><br>
+
+			<label for="remarks">
+				Remarks:
+			</label>
+			<textarea id="remarks" placeholder="Type Any Remarks"></textarea><br><br><br>
+
+			<input class="btn btn-primary" type="submit" name="Submit" id="subBtn">
+
+
+	</form>
+
+</body>
+</html>
