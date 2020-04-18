@@ -8,9 +8,6 @@
          #addbtn{
              margin-bottom: 5px;
          }
-         
-         
-         
      
      </style>
      
@@ -18,7 +15,7 @@
   
  </head>
 
- <body>
+ 
      <h4 class="jumbotron">Requisition Page</h4>
     <h6>Requirements:</h6>
 	<table>
@@ -37,7 +34,7 @@
    
 <tr><th><button type="button" id="addbtn" class="btn btn-success" onclick="add()">Add</button></th></tr>
       </div>
-        <form action="DataInput">
+        <form action="DataInput" method="post">
                 <table class="table table-primary">
                     <tr class="bg-info">
                     <th>Serial No.</th>
@@ -52,35 +49,38 @@
          </form>
 <script>
     
-    var i=0
+    var i=0;
     var n = i+1;
-    var item=[n]
-    var quant=[n]
+    var item=[n];
+    var quant=[n];
     
     function add(){
-        var added = document.getElementById("itemQuan")
-        var table = document.getElementById("myTable")
+        var added = document.getElementById("itemQuan"); 
+        var table = document.getElementById("myTable");
         var quanity = document.getElementById("quantity");
-        var drop = document.getElementById("drop")
-        item[i]=drop.value
-        quant[i]=quanity.value
+        var drop = document.getElementById("drop");
+        item[i]=drop.value;
+        quant[i]=quanity.value;
         
         var row=`
                     <tr>
                     <td>${i+1}</td>
-                    <td><input value=${item[i]} type="text"  name=${"item"+i}></td>
-                    <td><input value=${quant[i]} type="text" name="quantity"></td>
+                    <td><input type="text"  name="item${i}"></td>
+                    <td><input type="text" name="quantity${i}"></td>
                     </tr>
-
-                    `
+                    `;
         
-        itemQuan.innerHTML=i+1
-        table.innerHTML += row
-        i++
-        quanity.value=0
-        drop.selectedIndex++
+        itemQuan.innerHTML=i+1;
+        table.innerHTML += row;
+        i++;
+        item0 = document.getElementsByName("item"+i)
+        quantity0 = document.getElementsByName("quantity"+i)
+        quanity.value=0;
+        item0.setArribute("value = item0");
+        drop.selectedIndex++;
+        
         
     }
     </script>
- </body>
+ 
 </html>
