@@ -8,6 +8,10 @@
         <servlet-name>DataInput</servlet-name>
         <servlet-class>erpPack.DataInput</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FetchData</servlet-name>
+        <servlet-class>erpPack.FetchData</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dataEntry</servlet-name>
         <url-pattern>/dataEntry</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>DataInput</servlet-name>
         <url-pattern>/DataInput</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FetchData</servlet-name>
+        <url-pattern>/FetchData</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

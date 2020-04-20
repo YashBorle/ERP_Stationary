@@ -15,7 +15,7 @@
             <th>Item</th>
             <th>Requested</th>
             <th>Remark</th>
-            <th>Suppilied</th>
+            <th>Supplied</th>
             </tr>
             
             <tbody id="tableReq"></tbody>
@@ -31,59 +31,38 @@
             <button class="btn btn-primary" onclick="SaveTheEntry()" value="Save" >Save</button>
             </div>
             </div>
-        
+        <div id="message"></div>
         
         <script>
-        let myjson =[{
-                      "items": [
-                        "pen",
-                        "pencil",
-                        "duster",
-                        "pages"
-                      ],
-                      "reqQuantity": [
-                        50,
-                        60,
-                        70,
-                        80
-                      ],
-                      "remarks": [
-                        "n",
-                        "n",
-                        "n",
-                        "n"
-                      ],
-                      "supplied": [
-                        0,
-                        0,
-                        0,
-                        0
-                      ],
-                      "date": "2020-03-02",
-                      "time":"07:13:45",
-                      "stockFilled": false
-                    }
-                    ]
-        
-        buildTable(myjson);
+            
+            
+
+
+
+        let myjson = '<%= (String) (request.getAttribute("gjson")) %>';
+        var obj = JSON.parse(myjson);
+
+        buildTable(obj);
         
         function buildTable(data){
             
+
+            
             var table = document.getElementById("tableReq")
             
-            for(var i=0;i<data[0].items.length;i++){
+            for(var i=0;i<data.items.length;i++){
             var row=`
                     <tr>
-                        <td>${i+1}</td>
-                        <td>${data[0].items[i]}</td>
-                        <td>${data[0].reqQuantity[i]}</td>
-                        <td contentEditable>${data[0].remarks[i]}</td>
-                        <td contentEditable>${data[0].supplied[i]}</td>
+                        <td>`+(i+1)+`</td>
+                        <td>`+data.items[i]+`</td>
+                        <td>`+data.quantity[i]+`</td>
+                        <td contentEditable>`+data.remark[i]+`</td>
+                        <td contentEditable>`+data.supplied[i]+`</td>
                     <tr>`
             table.innerHTML += row
             }
-            document.getElementById("date").innerHTML=data[0].date
-            document.getElementById("time").innerHTML=data[0].time
+//            document.getElementById("date").innerHTML=data.date
+//            document.getElementById("time").innerHTML=data.time
         }
         
         </script>

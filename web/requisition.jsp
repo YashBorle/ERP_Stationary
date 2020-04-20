@@ -45,22 +45,20 @@
    
 <tr><th><button type="button" id="addbtn" class="btn btn-success" onClick="add()" >Add</button></th></tr>
       </div>
+      
         <form action="DataInput" method="post">
                 <table class="table table-primary">
                     <tr class="bg-info">
-                    <th>Serial No.</th>
-                    <th>Item</th>
-                    <th>Quantity</th>
-                        </tr>
+                        <th>Serial No.</th>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                    </tr>
                     <tbody id="myTable"></tbody>
                 </table>
                 
-                <tr><th><input type="submit" class="btn btn-primary" name="submit" value="Submit"/></th></tr></tr></table>
+                <input type="submit" class="btn btn-primary" name="submit" value="Submit"/>
                 <div>Items:  <p id="itemQuan" name="itemQuan"></p></div>
-
-                    <div id="message">
-                    </div>
-         </form>
+        </form>
       
 <!--      
                    <script type="text/javascript">
@@ -74,25 +72,7 @@
     var n = i+1;
     var item=[n];
     var quant=[n];
-//    $(document).ready(function(){
-//        var ival = $("#drop").val();
-//        var qval = $("#quantity").val();
-//        $("#addbtn").click(add(qval,ival))
-//    });
-//    
-//    function to(val){
-//        var valu = document.getElementById("message");
-//        valu.innerHTML = val;
-//    }
-
-//    $(#addbtn).bind("click",function(){
-//        var ival = $("#drop").val();
-//        var qval = $("#quantity").val();
-//        alert(ival+qval);
-////        $("#myTable").append(getDynamicTable(ival,qval))
-//    });
-//    
-//    
+    
     function add(){
         var added = document.getElementById("itemQuan");
         var table = document.getElementById("myTable");
@@ -115,8 +95,8 @@
         return `
                     <tr>
                     <td>`+(i+1)+`</td>
-                    <td><input type="text" name="items" value=`+ival+`></td>
-                    <td><input type="text" name="quantities" value=`+qval+`></td>
+                    <div><input type="text" name="items" value=`+ival+`></div>&nbsp
+                    <div><input type="text" name="quantities" value=`+qval+`></div>
                     </tr>
                     `
     }
