@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package erpPack;
+package erpServs;
 
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -38,37 +38,31 @@ public class FetchData extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             out.println("Hahaha");
            try{
-               
-               String dbUserName="root";
-               String dbPass ="rott";
-               String dbUrl = "jdbc:mysql://localhost:3306/erpdb";
-               
-               Class.forName("com.mysql.jdbc.Driver");
-            out.println("hahaha");
-            Connection con = DriverManager.getConnection(dbUrl,dbUserName,dbPass);
             
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from r_object where isFilled='0'");
-            rs.next();
-            int i = rs.getInt(1);
-            String[] items = rs.getString(2).split(",");
-            String[] quantity = rs.getString(3).split(",");
-            String[] remark = rs.getString(4).split(",");
-            String[] supplied = rs.getString(5).split(",");
-            boolean isPrinted = bool(rs.getInt(6));
-            boolean isFilled = bool(rs.getInt(7)); 
-            
-            RequisitionForm re = new RequisitionForm(i,items,quantity,remark,supplied,isPrinted,isFilled);
-            
-            Gson gson = new Gson();
-            String jsonObj = gson.toJson(re);
-            
-            out.println(jsonObj);
-            
-//            response.sendRedirect("stockFill.jsp");
-            
-            request.setAttribute("gjson",jsonObj);
-            request.getRequestDispatcher("stockFill.jsp").forward(request, response);
+                Connection con = DBConnection.dbInitialize();
+
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("select * from r_object where isFilled='0'");
+                rs.next();
+                int i = rs.getInt(1);
+                String[] items = rs.getString(2).split(",");
+                String[] quantity = rs.getString(3).split(",");
+                String[] remark = rs.getString(4).split(",");
+                String[] supplied = rs.getString(5).split(",");
+                boolean isPrinted = bool(rs.getInt(6));
+                boolean isFilled = bool(rs.getInt(7)); 
+
+                RequisitionForm re = new RequisitionForm(i,items,quantity,remark,supplied,isPrinted,isFilled);
+
+                Gson gson = new Gson();
+                String jsonObj = gson.toJson(re);
+
+                out.println(jsonObj);
+
+        //            response.sendRedirect("stockFill.jsp");
+
+                request.setAttribute("gjson",jsonObj);
+                request.getRequestDispatcher("stockFill.jsp").forward(request, response);
 
             
             

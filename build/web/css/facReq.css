@@ -1,0 +1,43 @@
+body{
+	font-family: sans-serif;
+}/*
+h3{
+	text-align: center;
+	font-size: 50px;
+	color: steelblue;
+}*/
+h2{
+	text-align: center;
+	font-size: 25px;
+	color: steelblue;
+    
+}
+
+
+.requisition-page{
+	max-width: 500px;
+	margin: 2rem auto;
+	border: 2px solid skyblue;
+	padding: 5rem;
+	border-radus: 5px;
+
+	label {
+		margin: 20px;
+		display:block;
+		padding:1rem 0,Srem;
+		text-transform: uppercase;
+		font-size: 14px;
+		border: 2px solid #298089;
+		padding: 2rem;
+		font-size: 18px; 
+	}
+
+	input, textarea{
+		display: block;
+		width: 100%;
+		border: 2px solid #298089;
+		font-size: 18px;
+		border-radius: 5px;
+	}
+}
+}
