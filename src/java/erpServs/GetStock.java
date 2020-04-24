@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package erpServs;
 
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.DriverManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,27 +27,29 @@ public class GetStock extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+             {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             try{
-               String dbQuery = "Select itemName from erpdb.stock";
+               String dbQuery = "Select * from erpdb.stock";
                
                
                Connection con = DBConnection.dbInitialize();
                Statement stmt = con.createStatement();
                ResultSet rs = stmt.executeQuery(dbQuery);
+
+                ArrayList<Item> items = new ArrayList<>();
                 
-                ArrayList<String> items = new ArrayList<String>();
-                
+
                 while(rs.next()){
-                    items.add(rs.getString(1));
+                    Item obj = new Item(rs.getInt("itemId"),rs.getString("itemName"),rs.getInt("itemQuantity"));
+                    items.add(obj);
                 }
                 
                 Gson gson = new Gson();
                 
-                String jsonobj =gson.toJson(items);
+                String jsonobj = gson.toJson(items);
                 out.println(jsonobj);
                
                 request.setAttribute("gjson",jsonobj);
@@ -63,6 +60,9 @@ public class GetStock extends HttpServlet {
             catch(Exception e){
                 System.out.println(e);
             }
+        }
+        catch(Exception e){
+            System.out.println(e);
         }
     }
 
