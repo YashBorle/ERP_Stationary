@@ -32,13 +32,7 @@
 	<table>
     <tr><th><label for='drop'>Select the item</label></th>
     <th><select id="drop">
-    <option value="pen">Pen</option><br />
-    <option value="pencil">Pencil</option><br />
-    <option value="eraser">Eraser</option><br />
-    <option value="bmarker">Board Markers</option><br />
-    <option value="highlighter">Highlighters</option><br />
-    <option value="shrpener">Sharpener</option><br />
-    <option value="stapler">Stapler</option></th> </tr>
+    </th> </tr>
 
     <tr><th><label for="quantity">Quantity</label></th>
         <th><input type="number" id="quantity" placeholder="Quantity Required"></th>
@@ -46,7 +40,7 @@
 <tr><th><button type="button" id="addbtn" class="btn btn-success" onClick="add()" >Add</button></th></tr>
       </div>
       
-        <form action="DataInput" method="post">
+      <form>
                 <table class="table table-primary">
                     <tr class="bg-info">
                         <th>Serial No.</th>
@@ -56,9 +50,11 @@
                     <tbody id="myTable"></tbody>
                 </table>
                 
-                <input type="submit" class="btn btn-primary" name="submit" value="Submit"/>
+                <input type="button" class="btn btn-primary" id="submit" value="Submit"/>
                 <div>Items:  <p id="itemQuan" name="itemQuan"></p></div>
         </form>
+      <div id="message"></div>
+
       
 <!--      
                    <script type="text/javascript">
@@ -67,6 +63,53 @@
                     });
 -->                    </script>
 <script type="text/javascript">
+    
+//    var elems = document.getElementsByName("item")
+//    var arr = jQuery.makeArray( elems );
+
+
+    let myData = `<%= (String)(request.getAttribute("gjson") ) %>`;
+    var obj = JSON.parse(myData);
+    var opt = document.getElementById("drop");
+    for(var i=0;i<obj.length;i++){
+                    var option =`<option>`+obj[i].ItemName+`</option>`
+                    opt.innerHTML += option;
+                }
+    
+    
+    $(document).ready(function(){
+     $("#submit").click(function(){
+        var arr = jQuery.makeArray(document.getElementsByName("item"));
+        var qua = jQuery.makeArray(document.getElementsByName("quantity"));
+        var quant= [];
+        var it =[];
+        for(var i=0;i<arr.length;i++){
+            if(arr[i].value!==""){
+                it.push(arr[i].value);
+                if(qua[i].value!==""){
+                    quant.push(qua[i].value);
+                }
+            }                
+        }
+        $.ajax({
+            type:'POST',
+            data:{items:it.toString(),quantity: quant.toString(),itl:it.length,qtl:quant.length},
+            datatype:'json',
+            url:'DataInput',
+            success: function(result){
+                if(result.message === "Success"){
+                    alert(result.message);
+                    window.location.pathname ="ERP_Stationary/index.jsp";
+                }
+                else{
+                    window.alert(result.message);
+                }
+//                $("#message").html("Success"); 
+            }
+        });
+     });
+    });
+
     
     var i=0;
     var n = i+1;
@@ -81,11 +124,12 @@
         ival=drop.value;
         qval=quanity.value;
         
-        
         var row=getDynamicTable(i,ival,qval);
+        
         itemQuan.innerHTML=i+1;
         table.innerHTML += row;
         i++;
+        
         quanity.value=0;
         drop.selectedIndex++;
         
@@ -95,11 +139,13 @@
         return `
                     <tr>
                     <td>`+(i+1)+`</td>
-                    <div><input type="text" name="items" value=`+ival+`></div>&nbsp
-                    <div><input type="text" name="quantities" value=`+qval+`></div>
+                    <div><td><input type="text" name="item" value=`+ival+` readonly></td></div>&nbsp
+                    <div><td><input type="number" name="quantity" value=`+qval+`></td></div>
                     </tr>
                     `
     }
+    
+    
     
     </script>
 </html>

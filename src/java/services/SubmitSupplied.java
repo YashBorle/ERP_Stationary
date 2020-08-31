@@ -1,21 +1,24 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package services;
 
-package erpServs;
-
-import com.google.gson.Gson;
+import controller.DBConnection;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.*;
-import java.util.ArrayList;
-
 /**
  *
  * @author LoveYou3000
  */
-public class GetStock extends HttpServlet {
+public class SubmitSupplied extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,42 +30,41 @@ public class GetStock extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-             {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            
+            String id = request.getParameter("id");
+            String remarks = request.getParameter("remarks");
+            String supplied = request.getParameter("supplied");
+            String items = request.getParameter("items");
+            String DBquery ="update erpdb.r_object "
+                    + "set remark='"+remarks+"',supplied='"+supplied+"',isFilled="+1+",stockFillDate= CURRENT_TIMESTAMP() "
+                    + "where idr_object="+id;
+
+            JsonObject obj = new JsonObject();
+            
+            request.setCharacterEncoding("utf8");
+            response.setContentType("application/json");
+            
             try{
-               String dbQuery = "Select * from erpdb.stock";
-               
-               
-               Connection con = DBConnection.dbInitialize();
-               Statement stmt = con.createStatement();
-               ResultSet rs = stmt.executeQuery(dbQuery);
-
-                ArrayList<Item> items = new ArrayList<>();
-                
-
-                while(rs.next()){
-                    Item obj = new Item(rs.getInt("itemId"),rs.getString("itemName"),rs.getInt("itemQuantity"));
-                    items.add(obj);
-                }
-                
-                Gson gson = new Gson();
-                
-                String jsonobj = gson.toJson(items);
-                out.println(jsonobj);
-               
-                request.setAttribute("gjson",jsonobj);
-                request.getRequestDispatcher("facultyReq.jsp").forward(request,response);
-               
-                
+                Connection con = DBConnection.dbInitialize();
+                Statement s = con.createStatement();
+                s.execute(DBquery);
+                updateStock(s,items.split(","),supplied.split(","));
+                s.close();
+                obj.addProperty("message", "Success");
+                out.print(obj);
             }
-            catch(Exception e){
-                System.out.println(e);
+            catch(ClassNotFoundException | SQLException e){
+                System.out.print(e);
+                obj.addProperty("message", e.toString());
+                out.print(obj); 
             }
-        }
-        catch(Exception e){
-            System.out.println(e);
+           
+            
+            
         }
     }
 
@@ -104,5 +106,16 @@ public class GetStock extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void updateStock(Statement s, String[] item, String[] supplied) throws SQLException {
+        String stockQuery;
+        for(int i = 0 ; i<item.length;i++){
+             stockQuery ="update erpdb.stock " +
+                    "set itemQuantity = itemQuantity +"+supplied[i]+
+                    " where itemName='" +item[i]+"'"
+                    ;
+            s.execute(stockQuery);
+        }
+    }
 
 }

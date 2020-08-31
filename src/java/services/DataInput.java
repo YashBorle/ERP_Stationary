@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package erpServs;
+package services;
 
+import controller.DBConnection;
+import com.google.gson.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Enumeration;
+import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,14 +45,35 @@ public class DataInput extends HttpServlet {
             throws ServletException, IOException {
                 try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-//            String s = request.getParameter("item0");            
-            Enumeration paramNames = request.getParameterNames();
-            out.println("Hahaha");
-            String[] items = request.getParameterValues("items");
-            out.println(Arrays.toString(items)); 
+            String items =request.getParameter("items");
+            String quan = request.getParameter("quantity");
+            int i= Integer.parseInt(request.getParameter("itl"));
+            int q= Integer.parseInt(request.getParameter("qtl"));
+            request.setCharacterEncoding("utf8");
+            response.setContentType("application/json");
+            JsonObject obj = new JsonObject();
+            if(i==q){
+            String dbQuery= "INSERT INTO erpdb.r_object(items,quantity,printDate)values('"+items+"','"+quan+"',CURRENT_TIMESTAMP())";
             
-            
-            
+            try{
+                Connection con = DBConnection.dbInitialize();
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate(dbQuery);
+                stmt.close();
+                obj.addProperty("message", "Success");
+                out.print(obj);
+            }
+            catch(ClassNotFoundException | SQLException e){
+                System.out.println(e);
+                obj.addProperty("message", e.toString());
+                out.print(obj);
+            }
+            }
+            else{
+                obj.addProperty("message", "Submit Proper Values!");
+                out.println(obj);
+            }
+
 //            String n = request.getParameter("itemQuan");
 //            out.println(n);
 //            int n =Integer.parseInt(request.getParameter("itemQuan"));

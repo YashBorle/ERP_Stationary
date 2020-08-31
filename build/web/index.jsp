@@ -17,12 +17,12 @@ and open the template in the editor.
         <h4>ERP Stationary Management</h4>
         </div>        
         <div class="d-flex justify-content-center">
-            <div class="p-3"><a class="btn btn-outline-primary" href="requisition.jsp">Requisition Page</a></div>
+            <div class="p-3"><a class="btn btn-outline-primary" href="GetStock?e='requisition'">Requisition Page</a></div>
             <div class="p-3"><a class="btn btn-outline-primary" href="FetchData">Stock Filling</a></div>
         </div>
         <div class="d-flex justify-content-center">
-            <div class="p-3"><a class="btn btn-outline-primary" href="GetStock">Faculty Request</a></div>
-            <div class="p-3"><a class="btn btn-outline-primary" href="#">Stock Available</a></div>
+            <div class="p-3"><a class="btn btn-outline-primary" href="GetStock?e='request'">Faculty Request</a></div>
+            <div class="p-3"><a class="btn btn-outline-primary" href="DisplayRequests?last=5">Display Requests</a></div>
         </div>
     </body>
 </html>

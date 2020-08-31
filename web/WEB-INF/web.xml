@@ -2,15 +2,27 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>DataInput</servlet-name>
-        <servlet-class>erpServs.DataInput</servlet-class>
+        <servlet-class>services.DataInput</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FetchData</servlet-name>
-        <servlet-class>erpServs.FetchData</servlet-class>
+        <servlet-class>services.FetchData</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GetStock</servlet-name>
-        <servlet-class>erpServs.GetStock</servlet-class>
+        <servlet-class>services.GetStock</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitSupplied</servlet-name>
+        <servlet-class>services.SubmitSupplied</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>submitRequest</servlet-name>
+        <servlet-class>services.submitRequest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayRequests</servlet-name>
+        <servlet-class>services.DisplayRequests</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DataInput</servlet-name>
@@ -23,6 +35,18 @@
     <servlet-mapping>
         <servlet-name>GetStock</servlet-name>
         <url-pattern>/GetStock</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitSupplied</servlet-name>
+        <url-pattern>/SubmitSupplied</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>submitRequest</servlet-name>
+        <url-pattern>/submitRequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisplayRequests</servlet-name>
+        <url-pattern>/DisplayRequests</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

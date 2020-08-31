@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package erpServs;
+package services;
 
+import controller.DBConnection;
+import models.RequisitionForm;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,26 +43,32 @@ public class FetchData extends HttpServlet {
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("select * from r_object where isFilled='0'");
-                rs.next();
-                int i = rs.getInt(1);
-                String[] items = rs.getString(2).split(",");
-                String[] quantity = rs.getString(3).split(",");
-                String[] remark = rs.getString(4).split(",");
-                String[] supplied = rs.getString(5).split(",");
-                boolean isPrinted = bool(rs.getInt(6));
-                boolean isFilled = bool(rs.getInt(7)); 
+                if(rs.next()){
+                    int i = rs.getInt(1);
+                    String[] items = rs.getString(2).split(",");
+                    String[] quantity = rs.getString(3).split(",");
+                    boolean isPrinted = bool(rs.getInt(6));
+                    boolean isFilled = bool(rs.getInt(7));
+                    String date = rs.getString(8);
 
-                RequisitionForm re = new RequisitionForm(i,items,quantity,remark,supplied,isPrinted,isFilled);
+                    RequisitionForm re = new RequisitionForm(i,items,quantity,null,null,isPrinted,isFilled,date,null);
 
-                Gson gson = new Gson();
-                String jsonObj = gson.toJson(re);
+                    Gson gson = new Gson();
+                    String jsonObj = gson.toJson(re);
 
-                out.println(jsonObj);
+                    out.println(jsonObj);
+                    request.setAttribute("gjson",jsonObj);
+                    request.setAttribute("flag","true");
+                    request.getRequestDispatcher("stockFill.jsp").forward(request, response);
+                }
+                else{
+                    request.setAttribute("flag","false");
+                    request.getRequestDispatcher("stockFill.jsp").forward(request, response);
+                }
 
         //            response.sendRedirect("stockFill.jsp");
 
-                request.setAttribute("gjson",jsonObj);
-                request.getRequestDispatcher("stockFill.jsp").forward(request, response);
+
 
             
             
