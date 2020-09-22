@@ -18,7 +18,7 @@ import java.sql.SQLException;
 public class DBConnection {
     public static Connection dbInitialize() throws SQLException,ClassNotFoundException{
                String dbUserName="root";
-               String dbPass ="ya21le";
+               String dbPass ="root";
                String dbUrl = "jdbc:mysql://localhost:3306/erpdb";
                Class.forName("com.mysql.jdbc.Driver");
                Connection con = DriverManager.getConnection(dbUrl, dbUserName, dbPass);
